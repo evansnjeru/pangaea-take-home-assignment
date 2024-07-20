@@ -19,16 +19,12 @@ data Payload = Payload {
   subscribers :: [Subscriber]
 }
 
-data Result a b
-  = Ok a
-  | Error b
-
 data SubscriptionError
   = BadUrl
   | TopicUnavailable
 
-type CreateSubscription = Url -> Topic -> Result Subscription SubscriptionError 
+type CreateSubscription = Url -> Topic -> Either SubscriptionError Subscription
 
-type PublishMessage = Topic -> Message -> Result Payload SubscriptionError 
+type PublishMessage = Topic -> Message -> Either SubscriptionError Payload
 
-type Subscribe = Subscriber -> Topic -> Result Subscriber SubscriptionError
+type Subscribe = Subscriber -> Topic -> Either SubscriptionError Subscriber
